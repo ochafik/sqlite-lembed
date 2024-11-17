@@ -80,10 +80,13 @@ else
 BUILT_LOADABLE_PATH=$(BUILD_DIR)/lembed0.$(LOADABLE_EXTENSION)
 endif
 
-$(TARGET_LOADABLE): sqlite-lembed.c sqlite-lembed.h $(BUILD_DIR) $(prefix)
+$(TARGET_LOADABLE): sqlite-lembed.c sqlite-lembed.h $(BUILD_DIR) $(prefix) vendor/sqlite/sqlite3.c
 	cmake --build $(BUILD_DIR) -t sqlite_lembed $(EXTRA_CMAKE_BUILD)
 	ls $(BUILD_DIR)
 	cp $(BUILT_LOADABLE_PATH) $@
+
+vendor/sqlite/sqlite3.c:
+	./scripts/vendor.sh
 
 
 sqlite-lembed.h: sqlite-lembed.h.tmpl VERSION
